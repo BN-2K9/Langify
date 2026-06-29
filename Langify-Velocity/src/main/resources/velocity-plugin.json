@@ -1,0 +1,8 @@
+{
+  "id": "langify-velocity",
+  "name": "Langify-Velocity",
+  "version": "${version}",
+  "main": "com.bn_2k9.langifyVelocity.LangifyVelocity"
+  ,"description": "A plugin that adds multilanguage support in your server!"
+  ,"authors": ["BN_2K9"]
+}

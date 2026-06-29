@@ -1,0 +1,2 @@
+rootProject.name = 'Langify'
+include("Langify-Api", "Langify-Core", "Langify-Paper", "Langify-Velocity")

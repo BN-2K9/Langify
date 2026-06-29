@@ -1,0 +1,11 @@
+name: Langify-Paper
+description: $description
+prefix: Langify
+version: '${version}'
+
+main: com.bn_2k9.langifyPaper.LangifyPaper
+paperPluginLoader: com.bn_2k9.langifyPaper.LangifyPaperLoader
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [BN_2K9]

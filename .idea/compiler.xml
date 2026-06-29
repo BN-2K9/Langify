@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="21">
+      <module name="api" target="21" />
+      <module name="com.bn2k9.Langify-Core" target="21" />
+      <module name="com.bn2k9.Langify-Core.main" target="21" />
+      <module name="com.bn2k9.Langify-Core.test" target="21" />
+      <module name="Langify-Api.main" target="21" />
+      <module name="Langify-Api.test" target="21" />
+      <module name="Langify-Core" target="21" />
+      <module name="Langify-Core.main" target="21" />
+      <module name="Langify-Core.test" target="21" />
+      <module name="Langify-Paper" target="25" />
+      <module name="Langify-Paper.main" target="25" />
+      <module name="Langify-Paper.test" target="25" />
+      <module name="Langify-Velocity" target="21" />
+      <module name="Langify-Velocity.main" target="21" />
+      <module name="Langify-Velocity.test" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
