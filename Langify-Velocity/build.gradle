@@ -1,0 +1,38 @@
+plugins {
+    id("java-library")
+    id("xyz.jpenilla.run-velocity") version "3.0.2"
+}
+
+repositories {
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    implementation(project(":Langify-Core"))
+    compileOnly("com.velocitypowered:velocity-api:4.2.1-SNAPSHOT")
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+}
+
+tasks {
+  runVelocity {
+    // Configure the Velocity version for our task.
+    // This is the only required configuration besides applying the plugin.
+    // Your plugin's jar (or shadowJar if present) will be used automatically.
+    velocityVersion("4.2.1-SNAPSHOT")
+  }
+
+    processResources {
+        filesMatching('velocity-plugin.json') {
+            expand(
+                    version: project.version,
+                    description: project.description
+            )
+        }
+    }
+}

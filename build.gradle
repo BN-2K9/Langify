@@ -1,20 +1,22 @@
 plugins {
-    id 'groovy'
+    id 'java'
 }
 
 group = 'com.bn2k9'
-version = '1.0-SNAPSHOT'
+version = project.findProperty("version")
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
+subprojects {
+    apply plugin: 'java'
 
-}
-
-test {
-    useJUnitPlatform()
+    dependencies {
+        // Lombok dependency.
+        compileOnly("org.projectlombok:lombok:1.18.46")
+        annotationProcessor("org.projectlombok:lombok:1.18.46")
+    }
 }
 
 // Get the Java version.
@@ -37,11 +39,15 @@ java {
 
 // Set the git hash if the jar has uncommitted changes.
 tasks.withType(Jar).configureEach {
+    // Rename all jars to include a git hash if this is a dirty version.
     def baseName = "${project.name}"
-
     archiveBaseName.set(
             providers.zip(gitHash, dirty) { hash, isDirty ->
                 isDirty ? "${baseName}-${hash}" : baseName
             }
     )
+
+    // Set the destination of all jars in the build/output folder.
+    destinationDirectory = file("$rootDir/build/output")
+
 }
