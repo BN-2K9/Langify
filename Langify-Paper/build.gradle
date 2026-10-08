@@ -1,7 +1,8 @@
 plugins {
     id("java-library")
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
-    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("xyz.jpenilla.run-paper") version "3.1.0"
+    id 'com.gradleup.shadow' version '9.1.0'
 }
 
 repositories {
@@ -9,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":Langify-Core"))
+    implementation project(":Langify-Core")
     paperweight.paperDevBundle("26.1.2.build.+")
 }
 
@@ -26,11 +27,18 @@ tasks {
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree=true")
     }
 
+    build {
+        dependsOn tasks.shadowJar
+    }
+
+    def pluginVersion = version.toString()
+    def pluginDescription = description?.toString() ?: ""
+
     processResources {
         filesMatching('plugin.yml') {
             expand(
-                    version: project.version,
-                    description: project.description
+                    version: pluginVersion,
+                    description: pluginDescription
             )
         }
     }

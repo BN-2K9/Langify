@@ -13,7 +13,7 @@
         <module name="Langify.Langify-Core.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="21">
+    <bytecodeTargetLevel target="25">
       <module name="api" target="21" />
       <module name="com.bn2k9.Langify-Core" target="21" />
       <module name="com.bn2k9.Langify-Core.main" target="21" />

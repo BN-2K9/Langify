@@ -1,7 +1,17 @@
+plugins {
+    id 'com.gradleup.shadow' version '9.1.0'
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compileOnly project(':Langify-Api')
+    implementation project(":Langify-Api")
+}
+
+tasks {
+    build {
+        dependsOn tasks.shadowJar
+    }
 }
