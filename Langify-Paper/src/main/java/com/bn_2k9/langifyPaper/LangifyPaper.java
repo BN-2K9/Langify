@@ -8,7 +8,6 @@ import com.bn_2k9.langifyPaper.framework.Logger;
 import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
 import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
 import lombok.Getter;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
