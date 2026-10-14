@@ -11,6 +11,10 @@ dependencies {
 }
 
 tasks {
+    shadowJar {
+        archiveClassifier.set('')
+    }
+
     build {
         dependsOn tasks.shadowJar
     }

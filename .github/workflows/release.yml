@@ -20,13 +20,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Validate version tag
         if: startsWith(github.ref, 'refs/tags/')
@@ -46,7 +46,7 @@ jobs:
           ./gradlew clean build
 
       - name: Upload JAR artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Langify-Paper
           path: '**/build/libs/*.jar'
