@@ -10,4 +10,9 @@ public interface FileInterface {
      * @return a list of the language files.
      */
     List<File> getLanguageFiles();
+
+    /**
+     * Generate the default folder / file.
+     */
+    void generateDefaults();
 }

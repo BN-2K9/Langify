@@ -8,6 +8,8 @@ repositories {
 
 dependencies {
     implementation project(":Langify-Api")
+
+    implementation 'org.yaml:snakeyaml:2.4'
 }
 
 tasks {
