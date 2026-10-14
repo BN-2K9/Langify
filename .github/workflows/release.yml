@@ -1,0 +1,76 @@
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate version tag
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          GRADLE_VERSION=$(grep -E '^version=' gradle.properties | head -n1 | cut -d= -f2-)
+
+          if [ "$TAG_VERSION" != "$GRADLE_VERSION" ]; then
+            echo "Tag version ($TAG_VERSION) does not match gradle.properties ($GRADLE_VERSION)"
+            exit 1
+          fi
+
+      - name: Build and test
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Langify-Paper
+          path: '**/build/libs/*.jar'
+          if-no-files-found: error
+
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mapfile -t JARS < <(
+            find . -type f -path '*/build/libs/*.jar' \
+              ! -name '*-sources.jar' \
+              ! -name '*-javadoc.jar'
+          )
+
+          if [ "${#JARS[@]}" -eq 0 ]; then
+            echo "No release JARs found"
+            exit 1
+          fi
+
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Langify $GITHUB_REF_NAME" \
+            --generate-notes \
+            "${JARS[@]}"

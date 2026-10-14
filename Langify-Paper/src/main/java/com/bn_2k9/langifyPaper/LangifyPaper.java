@@ -49,12 +49,6 @@ public final class LangifyPaper extends JavaPlugin {
             updateChecker.checkForUpdates();
         }
 
-        // Check before enabling the stats.
-        if (ConfigManager.getConfig().getEnableStats()) {
-
-        }
-
-
         // Register the placeholder api expansion.
         if (!registerPlaceholderApi()) {
             pluginLogger.logInfo(LogInfoType.ERROR, "Failed to register the PlaceholderApi Expansion. (PlaceholderApi might not be started correctly?)");

@@ -46,7 +46,6 @@ public class ConfigManager implements ConfigInterface {
 
         // Save all the config comments.
         for (String key : configComments.keySet()) {
-            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.ERROR, "Saving comment: " + key + " " + configComments.get(key));
             configuration.setComments(key, configComments.get(key));
         }
 

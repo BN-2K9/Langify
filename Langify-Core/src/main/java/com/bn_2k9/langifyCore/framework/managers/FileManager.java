@@ -12,10 +12,10 @@ import java.util.List;
 public class FileManager {
 
     @Getter
-    public FileInterface fileInterface;
+    public final FileInterface fileInterface;
 
     @Getter
-    public List<String> fileNames = new ArrayList<>();
+    public final List<String> fileNames = new ArrayList<>();
 
     public FileManager(FileInterface fileInterface) {
         this.fileInterface = fileInterface;

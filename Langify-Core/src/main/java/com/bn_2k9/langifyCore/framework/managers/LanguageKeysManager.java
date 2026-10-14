@@ -14,7 +14,7 @@ public class LanguageKeysManager {
     /**
      * A has map for all the languageKeys, So: The first string is the Language_Name, The second hashmap is the key, entry.
      */
-    HashMap<String, HashMap<String, String>> languageKeys = new HashMap<>();
+    final HashMap<String, HashMap<String, String>> languageKeys = new HashMap<>();
 
     public void loadLanguageKeys() {
         if (langDataStoreMethod == LangDataStoreMethod.Load_All) {

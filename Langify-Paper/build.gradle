@@ -54,11 +54,16 @@ tasks {
         dependsOn tasks.shadowJar
     }
 
-    def pluginVersion = project.version.toString()
-    def pluginDescription = project.description?.toString() ?: ""
+    version = findProperty('version') ?: '1.0.0'
+    description = findProperty('description') ?: ''
+
+    def pluginVersion = rootProject.version.toString()
+    def pluginDescription = rootProject.description?.toString() ?: ''
 
     processResources {
-        filesMatching('plugin.yml') {
+        filteringCharset = 'UTF-8'
+
+        filesMatching('paper-plugin.yml') {
             expand(
                     version: pluginVersion,
                     description: pluginDescription

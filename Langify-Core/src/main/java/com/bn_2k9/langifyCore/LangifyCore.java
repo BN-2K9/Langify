@@ -15,11 +15,11 @@ public class LangifyCore {
     @Getter
     public LanguageSelectionManager languageSelectionManager;
     @Getter
-    public LoggerInterface logger;
+    public final LoggerInterface logger;
     @Getter
-    public FileManager fileManager;
+    public final FileManager fileManager;
     @Getter
-    public ConfigInterface configInterface;
+    public final ConfigInterface configInterface;
 
     public LangifyCore(LoggerInterface logger, FileInterface fileInterface, ConfigInterface configInterface) {
         // Register the custom logger.

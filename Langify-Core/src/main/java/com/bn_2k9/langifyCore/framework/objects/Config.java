@@ -24,7 +24,7 @@ public class Config {
      * Use this to get the config defaults.
      */
     public Config() {
-        configKeys.put("Prefix", "Langify >>");
+        configKeys.put("Prefix", "Langify >> ");
         configKeys.put("LangDataStoreMethod", LangDataStoreMethod.Dynamic_Load.toString());
         configKeys.put("Debug", false);
         configKeys.put("CheckForUpdates", true);

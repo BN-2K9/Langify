@@ -17,6 +17,9 @@ public class LangifyPaperLoader implements PluginLoader {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
         resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
 
+        // Library used for web communication.
         resolver.addDependency(new Dependency(new DefaultArtifact("com.fasterxml.jackson.core:jackson-databind:2.22.3"), null));
+
+        builder.addLibrary(resolver);
     }
 }
