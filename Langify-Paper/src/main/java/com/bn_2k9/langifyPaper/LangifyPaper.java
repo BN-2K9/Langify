@@ -5,8 +5,10 @@ import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import com.bn_2k9.langifyPaper.framework.ConfigManager;
 import com.bn_2k9.langifyPaper.framework.FileManager;
 import com.bn_2k9.langifyPaper.framework.Logger;
-import com.bn_2k9.langifyPaper.integrations.PlaceholderApiExtension;
+import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
+import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,9 +39,22 @@ public final class LangifyPaper extends JavaPlugin {
         fileManager = new FileManager();
         configManager = new ConfigManager();
 
+        // Create and initialize the langifyCore.
         langifyCore = new LangifyCore(pluginLogger, fileManager, configManager);
-
         langifyCore.init();
+
+        // Check for updates.
+        UpdateChecker updateChecker = new UpdateChecker();
+        // Only check for the newest version if not in debug mode! (To reduce the api requests.)
+        if (!ConfigManager.getConfig().getDebug() && ConfigManager.getConfig().getCheckForUpdates()) {
+            updateChecker.checkForUpdates();
+        }
+
+        // Check before enabling the stats.
+        if (ConfigManager.getConfig().getEnableStats()) {
+
+        }
+
 
         // Register the placeholder api expansion.
         if (!registerPlaceholderApi()) {

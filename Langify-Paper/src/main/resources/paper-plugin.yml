@@ -4,7 +4,6 @@ prefix: Langify
 version: '${version}'
 authors: [BN_2K9]
 
-
 main: com.bn_2k9.langifyPaper.LangifyPaper
 paperPluginLoader: com.bn_2k9.langifyPaper.LangifyPaperLoader
 api-version: '26.1.2'

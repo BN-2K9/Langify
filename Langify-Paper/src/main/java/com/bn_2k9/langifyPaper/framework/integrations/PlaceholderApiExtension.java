@@ -1,4 +1,4 @@
-package com.bn_2k9.langifyPaper.integrations;
+package com.bn_2k9.langifyPaper.framework.integrations;
 
 import com.bn_2k9.langifyPaper.LangifyPaper;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

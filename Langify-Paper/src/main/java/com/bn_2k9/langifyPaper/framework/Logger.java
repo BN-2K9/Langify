@@ -2,6 +2,7 @@ package com.bn_2k9.langifyPaper.framework;
 
 import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
+import com.bn_2k9.langifyPaper.LangifyPaper;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ansi.ANSIComponentSerializer;
@@ -32,5 +33,9 @@ public class Logger implements LoggerInterface {
         // Send the message.
         Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
 
+    }
+
+    public static Logger getInstance() {
+        return LangifyPaper.getInstance().getPluginLogger();
     }
 }

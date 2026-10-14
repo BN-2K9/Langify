@@ -17,6 +17,13 @@ repositories {
 dependencies {
     implementation project(":Langify-Core")
 
+    // Used for http acces.
+    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.22.3")
+
+    // Used for BStats.
+    // Currently disabled due to not being able to acces the site.
+    //compileOnly("org.bstats:bstats-bukkit:3.2.1")
+
     // Paperweight
     paperweight.paperDevBundle("26.1.2.build.+")
 
@@ -47,8 +54,8 @@ tasks {
         dependsOn tasks.shadowJar
     }
 
-    def pluginVersion = version.toString()
-    def pluginDescription = description?.toString() ?: ""
+    def pluginVersion = project.version.toString()
+    def pluginDescription = project.description?.toString() ?: ""
 
     processResources {
         filesMatching('plugin.yml') {
