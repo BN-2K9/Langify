@@ -2,7 +2,6 @@ package com.bn_2k9.langifyPaper.framework;
 
 import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
-import com.bn_2k9.langifyPaper.LangifyPaper;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ansi.ANSIComponentSerializer;
@@ -19,12 +18,19 @@ public class Logger implements LoggerInterface {
     @Override
     public void logInfo(LogInfoType type, String message) {
 
+        // Make sure that debug messages are only being sent when enabled.
+        if (type == LogInfoType.DEBUG && !ConfigManager.getConfig().getDebug()) {
+            return;
+        }
+
+        // The console serializer.
         ANSIComponentSerializer serializer = ANSIComponentSerializer.builder()
                 .flattener(ComponentFlattener.basic())
                 .colorLevel(ColorLevel.TRUE_COLOR)
                 .build();
 
-        Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(LangifyPaper.getInstance().getConfig().getString("ConsolePrefix", "<red>PREFIX NOT SET.") + "<green>INFO <dark_grey>>> <white>" + message)));
+        // Send the message.
+        Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
 
     }
 }

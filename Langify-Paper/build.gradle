@@ -7,11 +7,21 @@ plugins {
 
 repositories {
     mavenCentral()
+
+    // PlaceholderApi
+    maven {
+        url = 'https://repo.extendedclip.com/releases/'
+    }
 }
 
 dependencies {
     implementation project(":Langify-Core")
+
+    // Paperweight
     paperweight.paperDevBundle("26.1.2.build.+")
+
+    // PlaceholderApi
+    compileOnly 'me.clip:placeholderapi:2.12.3'
 }
 
 java {
@@ -25,6 +35,12 @@ tasks {
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("26.1.2")
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree=true")
+
+        // Download the required plugin.
+        downloadPlugins {
+            // PlaceholderApi Plugin
+            modrinth("placeholderapi", "2.12.3")
+        }
     }
 
     build {

@@ -25,7 +25,7 @@ public class FileManager {
         }
     }
 
-    public FileManager getInstance() {
+    public static FileManager getInstance() {
         return LangifyCore.getInstance().getFileManager();
     }
 

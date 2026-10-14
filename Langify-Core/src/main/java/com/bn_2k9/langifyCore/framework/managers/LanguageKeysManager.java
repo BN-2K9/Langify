@@ -36,6 +36,7 @@ public class LanguageKeysManager {
         } else  {
             return "Langify: Requested language was not found.";
         }
+        return "Langify: Requested language was not found.";
     }
 
 }
