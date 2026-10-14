@@ -26,8 +26,8 @@ public class PlaceholderApiExtension extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
 
-        // %langify:key.key.key%
-        // %langify:key:lang%
+        // %langify:key.key.key% - Player required.
+        // %langify:lang:key% - No player required.
         String[] args = params.split(":");
 
         if (args.length == 1) {

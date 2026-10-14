@@ -15,4 +15,10 @@ public interface FileInterface {
      * Generate the default folder / file.
      */
     void generateDefaults();
+
+    /**
+     * Get only one Language File.
+     * @return the language file.
+     */
+    File getLanguageFile(String filename);
 }

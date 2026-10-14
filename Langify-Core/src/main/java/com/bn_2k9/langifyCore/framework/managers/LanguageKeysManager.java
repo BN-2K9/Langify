@@ -1,31 +1,18 @@
 package com.bn_2k9.langifyCore.framework.managers;
 
 import com.bn_2k9.langifyCore.LangifyCore;
-import com.bn_2k9.langifyCore.framework.interfaces.FileInterface;
 import com.bn_2k9.langifyCore.framework.objects.Language;
 import com.bn_2k9.langifyCore.framework.objects.LanguageFile;
 import com.bn_2k9.langifyCore.framework.utils.LangDataStoreMethod;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
-import org.yaml.snakeyaml.LoaderOptions;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class LanguageKeysManager {
-
-    /**
-     * The method selected for loading the languageKeys
-     */
-    LangDataStoreMethod langDataStoreMethod;
 
     /**
      * A list of available Languages.
@@ -50,7 +37,7 @@ public class LanguageKeysManager {
 
         LangifyCore.getInstance().getLogger().logInfo(LogInfoType.DEBUG, "Loaded (" + countOfLanguages + ") languages.");
 
-        if (langDataStoreMethod == LangDataStoreMethod.Load_All) {
+        if (LangifyCore.getInstance().config.getLangDataStoreMethod() == LangDataStoreMethod.Load_All) {
             for (File file : LangifyCore.getInstance().getFileInterface().getLanguageFiles()) {
                 LanguageFile languageFile = new LanguageFile(file);
                 Language language = languageFile.getLanguage();
@@ -68,19 +55,54 @@ public class LanguageKeysManager {
 
     /**
      * Get the language key from the cache or if not in the cache from the config.
-     * @param lang
-     * @param key
-     * @return
+     * @param lang the language should be the full file name with extension.
+     * @param key the key of the language file that should be retrieved.
+     * @return the message that is retuned.
      */
     public String getLanguageKey(String lang, String key) {
-        if (languageKeys.containsKey(lang)) {
-            return languageKeys.get(lang).getKeys().getOrDefault(key, "Langify: Requested key was not found.");
-        } else if (availableLanguages.contains(lang)) {
-
-        } else  {
-
+        // Check if the full file name is given. If not see if you can find it with .yml extensions.
+        if (!lang.contains(".yml")) {
+            if (lang.contains(".")) {
+                return "Langify: Invalid file type given.";
+            } else {
+                lang = lang + ".yml";
+            }
         }
-        return "Langify: Requested language was not found.";
+
+        if (LangifyCore.getInstance().getConfig().getLangDataStoreMethod() == LangDataStoreMethod.Disable_Cache) {
+
+            // Load it every time from the file itself. (Might actually be stupid but alright.)
+            LanguageFile languageFile = new LanguageFile(LangifyCore.getInstance().getFileInterface().getLanguageFile(lang));
+            return languageFile.get(key);
+
+        } else {
+            if (languageKeys.containsKey(lang)) {
+
+                // Load the language key from the cache.
+                String message = languageKeys.get(lang).getKeys().get(key);
+                if (message == null) {
+                    return "Langify: the requested key: " + key + " was not found in language: " + lang;
+                } else {
+                    return message;
+                }
+
+            } else if (availableLanguages.contains(lang)) {
+
+                // Dynamically load the language.
+                LanguageFile languageFile = new LanguageFile(LangifyCore.getInstance().getFileInterface().getLanguageFile(lang));
+                languageKeys.put(lang, languageFile.getLanguage());
+
+                String message = languageKeys.get(lang).getKeys().get(key);
+                if (message == null) {
+                    return "Langify: the requested key: " + key + " was not found in language: " + lang;
+                } else {
+                    return message;
+                }
+
+            }
+        }
+
+        return "Langify: Requested language: " + lang + " was not found.";
     }
 
     public InputStream getDefaultLanguage() {
