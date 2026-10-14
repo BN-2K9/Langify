@@ -50,6 +50,10 @@ tasks {
         }
     }
 
+    jar {
+        archiveClassifier.set('unshaded')
+    }
+
     shadowJar {
         archiveClassifier.set('')
     }

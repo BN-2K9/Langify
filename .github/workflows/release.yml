@@ -49,9 +49,12 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: Langify-Paper
-          path: '**/build/libs/*.jar'
+          path: |
+            Langify-Paper/build/libs/*.jar
+            !Langify-Paper/build/libs/*-plain.jar
+            !Langify-Paper/build/libs/*-sources.jar
+            !Langify-Paper/build/libs/*-javadoc.jar
           if-no-files-found: error
-
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
@@ -60,13 +63,14 @@ jobs:
         shell: bash
         run: |
           mapfile -t JARS < <(
-            find . -type f -path '*/build/libs/*.jar' \
+            find Langify-Paper/build/libs -maxdepth 1 -type f -name '*.jar' \
+              ! -name '*-plain.jar' \
               ! -name '*-sources.jar' \
               ! -name '*-javadoc.jar'
           )
 
           if [ "${#JARS[@]}" -eq 0 ]; then
-            echo "No release JARs found"
+            echo "No shaded Langify-Paper JAR found"
             exit 1
           fi
 
