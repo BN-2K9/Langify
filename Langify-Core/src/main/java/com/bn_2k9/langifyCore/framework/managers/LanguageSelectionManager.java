@@ -6,6 +6,7 @@ import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import java.util.HashMap;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public class LanguageSelectionManager {
 
     /**

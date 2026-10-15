@@ -29,6 +29,9 @@ public final class LangifyPaper extends JavaPlugin {
     @Getter
     public static LangifyPaper instance;
 
+    @Getter
+    private static Boolean placeholderApiEnabled = false;
+
     @Override
     public void onEnable() {
         // Save the main plugin instance.
@@ -74,6 +77,7 @@ public final class LangifyPaper extends JavaPlugin {
     private boolean registerPlaceholderApi() {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderApi")) {
             new PlaceholderApiExtension().register();
+            placeholderApiEnabled = true;
             return true;
         }
         return false;
