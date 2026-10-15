@@ -21,8 +21,7 @@ dependencies {
     compileOnly("com.fasterxml.jackson.core:jackson-databind:2.22.3")
 
     // Used for BStats.
-    // Currently disabled due to not being able to acces the site.
-    //compileOnly("org.bstats:bstats-bukkit:3.2.1")
+    compileOnly("org.bstats:bstats-bukkit:3.2.1")
 
     // Paperweight
     paperweight.paperDevBundle("26.1.2.build.+")

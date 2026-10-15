@@ -21,4 +21,10 @@ public interface FileInterface {
      * @return the language file.
      */
     File getLanguageFile(String filename);
+
+    /**
+     * Get SqlLite DB.
+     * @return the SqlLite file.
+     */
+    File getSqlLiteFile();
 }

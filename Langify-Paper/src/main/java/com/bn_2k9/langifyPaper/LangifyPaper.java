@@ -8,6 +8,7 @@ import com.bn_2k9.langifyPaper.framework.Logger;
 import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
 import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,6 +48,10 @@ public final class LangifyPaper extends JavaPlugin {
         // Only check for the newest version if not in debug mode! (To reduce the api requests.)
         if (!ConfigManager.getConfig().getDebug() && ConfigManager.getConfig().getCheckForUpdates()) {
             updateChecker.checkForUpdates();
+        }
+
+        if (ConfigManager.getConfig().getEnableStats() && !ConfigManager.getConfig().getDebug()) {
+            new Metrics(this, 34700);
         }
 
         // Register the placeholder api expansion.

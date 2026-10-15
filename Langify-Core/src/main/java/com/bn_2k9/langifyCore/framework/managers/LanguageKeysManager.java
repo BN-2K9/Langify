@@ -5,18 +5,21 @@ import com.bn_2k9.langifyCore.framework.objects.Language;
 import com.bn_2k9.langifyCore.framework.objects.LanguageFile;
 import com.bn_2k9.langifyCore.framework.utils.LangDataStoreMethod;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class LanguageKeysManager {
 
     /**
      * A list of available Languages.
      */
+    @Getter
     List<String> availableLanguages = new ArrayList<>();
 
     /**
@@ -26,7 +29,7 @@ public class LanguageKeysManager {
 
     public void loadLanguageKeys() {
 
-        // Remove the old languages.
+        // Remove the old languages. (for reloading)
         availableLanguages = new ArrayList<>();
         // Put all the new languages in.
         int countOfLanguages = 0;
@@ -51,6 +54,16 @@ public class LanguageKeysManager {
                 languageKeys.put(file.getName(), languageFile.getLanguage());
             }
         }
+    }
+
+    /**
+     * Get the language key for a specific player.
+     * @param uuid The player to get the language key for.
+     * @param key The language key to get.
+     * @return The value of the language key.
+     */
+    public String getLanguageKey(UUID uuid, String key) {
+        return getLanguageKey(LangifyCore.getInstance().getLanguageSelectionManager().getLanguageForPlayer(uuid), key);
     }
 
     /**

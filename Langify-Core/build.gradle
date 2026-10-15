@@ -9,7 +9,14 @@ repositories {
 dependencies {
     implementation project(":Langify-Api")
 
-    implementation 'org.yaml:snakeyaml:2.4'
+    // For parsing the language files.
+    compileOnly 'org.yaml:snakeyaml:2.4'
+
+    // For MysSql Usage.
+    compileOnly 'com.zaxxer:HikariCP:7.1.0'
+
+    // For sqlLite Usage.
+    compileOnly 'org.xerial:sqlite-jdbc:3.53.4.0'
 }
 
 tasks {

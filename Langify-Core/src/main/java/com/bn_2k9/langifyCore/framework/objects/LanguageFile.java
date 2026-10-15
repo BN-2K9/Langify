@@ -57,7 +57,7 @@ public class LanguageFile {
         if (value != null) {
             assert value instanceof String;
             return (String) value;
-        };
+        }
         return null;
     }
 

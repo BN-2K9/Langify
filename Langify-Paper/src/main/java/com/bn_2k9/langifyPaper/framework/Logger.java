@@ -31,7 +31,12 @@ public class Logger implements LoggerInterface {
                 .build();
 
         // Send the message.
-        Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
+        switch (type) {
+            case INFO -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
+            case WARNING -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<gold>WARN <dark_grey>>> <white>" + message)));
+            case ERROR -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<red>ERROR <dark_grey>>> <white>" + message)));
+            case DEBUG -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<yellow>DEBUG <dark_grey>>> <white>" + message)));
+        }
 
     }
 

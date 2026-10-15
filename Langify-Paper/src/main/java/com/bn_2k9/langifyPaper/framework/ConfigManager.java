@@ -96,7 +96,7 @@ public class ConfigManager implements ConfigInterface {
 
             Config config = new Config();
             HashMap<String, Object> configKeys = new HashMap<>();
-            for (String string : configurationSection.getKeys(false)) {
+            for (String string : configurationSection.getKeys(true)) {
                 if (yamlConfiguration.get(string) != null) {
                     configKeys.put(string, yamlConfiguration.get(string));
                 }

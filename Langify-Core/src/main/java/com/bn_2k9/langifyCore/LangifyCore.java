@@ -3,6 +3,7 @@ package com.bn_2k9.langifyCore;
 import com.bn_2k9.langifyCore.framework.interfaces.ConfigInterface;
 import com.bn_2k9.langifyCore.framework.interfaces.FileInterface;
 import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
+import com.bn_2k9.langifyCore.framework.managers.DataStoreManager;
 import com.bn_2k9.langifyCore.framework.managers.LanguageKeysManager;
 import com.bn_2k9.langifyCore.framework.managers.LanguageSelectionManager;
 import com.bn_2k9.langifyCore.framework.objects.Config;
@@ -15,16 +16,18 @@ public class LangifyCore {
     private static LangifyCore instance;
 
     @Getter
-    public LanguageSelectionManager languageSelectionManager;
+    private final LanguageSelectionManager languageSelectionManager;
     @Getter
-    public LanguageKeysManager languageKeysManager;
+    private final LanguageKeysManager languageKeysManager;
+    @Getter
+    private final DataStoreManager dataStoreManager;
 
     @Getter
-    public final LoggerInterface logger;
+    private final LoggerInterface logger;
     @Getter
-    public final FileInterface fileInterface;
+    private final FileInterface fileInterface;
     @Getter
-    public final ConfigInterface configInterface;
+    private final ConfigInterface configInterface;
 
     @Getter
     public Config config;
@@ -43,22 +46,30 @@ public class LangifyCore {
         // Register the languageKeyManager.
         this.languageKeysManager = new LanguageKeysManager();
         // Create the languageSelectionManager.
-        languageSelectionManager = new LanguageSelectionManager();
+        this.languageSelectionManager = new LanguageSelectionManager();
+        // Create the dataStoreManager
+        dataStoreManager = new DataStoreManager();
+    }
+
+    /**
+     * Initialize the langify core. This can be called in runtime to reload the core.
+     */
+    public void init() {
 
         // Save the default language and create the folder.
         fileInterface.generateDefaults();
 
         // Save the default config.
         configInterface.safeDefaultConfig();
-    }
-
-    public void init() {
 
         // Load the config.
         config = configInterface.loadConfig();
 
         // Load the languageKeys
         languageKeysManager.loadLanguageKeys();
+
+        // Load the dataStore manager.
+        dataStoreManager.init();
 
         //TODO add a message whenever a language does not have a key the default language does have.
 

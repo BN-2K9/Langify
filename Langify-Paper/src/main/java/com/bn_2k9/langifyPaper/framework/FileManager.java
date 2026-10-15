@@ -43,4 +43,14 @@ public class FileManager implements FileInterface {
         }
     }
 
+    @Override
+    public File getLanguageFile(String filename) {
+        return new File(langFolder.getPath() + filename);
+    }
+
+    @Override
+    public File getSqlLiteFile() {
+        return new File(LangifyPaper.getInstance().getDataFolder() + "/user_data.db");
+    }
+
 }

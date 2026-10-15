@@ -20,6 +20,14 @@ public class LangifyPaperLoader implements PluginLoader {
         // Library used for web communication.
         resolver.addDependency(new Dependency(new DefaultArtifact("com.fasterxml.jackson.core:jackson-databind:2.22.3"), null));
 
+        // library used for bStats.
+        resolver.addDependency(new Dependency(new DefaultArtifact("org.bstats:bstats-bukkit:3.2.1"), null));
+
+        // Libraries required by the core.
+        resolver.addDependency(new Dependency(new DefaultArtifact("org.yaml:snakeyaml:2.4"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("com.zaxxer:HikariCP:7.1.0"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("org.xerial:sqlite-jdbc:3.53.4.0"), null));
+
         builder.addLibrary(resolver);
     }
 }

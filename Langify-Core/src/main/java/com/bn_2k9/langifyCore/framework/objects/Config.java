@@ -1,5 +1,6 @@
 package com.bn_2k9.langifyCore.framework.objects;
 
+import com.bn_2k9.langifyCore.framework.utils.DataStoreTypes;
 import com.bn_2k9.langifyCore.framework.utils.LangDataStoreMethod;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,12 +25,16 @@ public class Config {
      * Use this to get the config defaults.
      */
     public Config() {
-        configKeys.put("Prefix", "Langify >> ");
+        configKeys.put("Prefix", "Langify // ");
         configKeys.put("LangDataStoreMethod", LangDataStoreMethod.Dynamic_Load.toString());
         configKeys.put("Debug", String.valueOf(false));
         configKeys.put("CheckForUpdates", String.valueOf(true));
         configKeys.put("EnableStats", String.valueOf(true));
         configKeys.put("DefaultLanguage", "en_us.yml");
+        configKeys.put("DataStore.Type", "SqlLite");
+        configKeys.put("DataStore.JDBCUrl", "");
+        configKeys.put("DataStore.UserName", "");
+        configKeys.put("DataStore.Password", "");
 
         this.comments = defaultComments();
     }
@@ -41,13 +46,17 @@ public class Config {
      * @param debug Debug mode.
      * @param comments The comments.
      */
-    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, HashMap<String, String> comments) {
+    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, DataStoreTypes dataStoreType, String JdbcUrl, String username, String password, HashMap<String, String> comments) {
         configKeys.put("Prefix", prefix);
         configKeys.put("LangDataStoreMethod", langDataStoreMethod.toString());
         configKeys.put("Debug", String.valueOf(debug));
         configKeys.put("CheckForUpdates", String.valueOf(checkForUpdates));
         configKeys.put("EnableStats", String.valueOf(enableStats));
         configKeys.put("DefaultLanguage", "en_us.yml");
+        configKeys.put("DataStore.Type", dataStoreType);
+        configKeys.put("DataStore.JDBCUrl", JdbcUrl);
+        configKeys.put("DataStore.UserName", username);
+        configKeys.put("DataStore.Password", password);
 
         this.comments = defaultComments();
         comments.replaceAll((s, v) -> v);
@@ -61,6 +70,10 @@ public class Config {
         comments.put("CheckForUpdates", List.of("The value for enabling the update checker.", "Possible Values: true/false"));
         comments.put("EnableStats", List.of("The value for enabling the stats. These will be publicly available. (No sensitive data is gathered.)", "Possible Values: true/false"));
         comments.put("DefaultLanguage", List.of("The default language that the player selects whenever joining. (Also the language that is seen as the most complete and will be used to check other language files to see if they are complete.)", "Possible Values: The language file name. e.g en_us.yml"));
+        comments.put("DataStore.Type", List.of("The type of DataStore method.", "Possible values: LiteSql, MySql"));
+        comments.put("DataStore.JDBCUrl", List.of("The JBDC connection string.", "Only needed when DataStore.Type = MySql"));
+        comments.put("DataStore.UserName", List.of("The Username to connect with to the database.", "Only needed when DataStore.Type = MySql"));
+        comments.put("DataStore.Password", List.of("The Password to connect with to the database.", "Only needed when DataStore.Type = MySql"));
 
         return comments;
     }
@@ -84,7 +97,7 @@ public class Config {
      * @return the value.
      */
     public boolean getDebug() {
-        return (Boolean) configKeys.get("Debug");
+        return Boolean.parseBoolean((String) configKeys.get("Debug"));
     }
 
     /**
@@ -92,7 +105,7 @@ public class Config {
      * @return the value.
      */
     public boolean getCheckForUpdates() {
-        return (Boolean) configKeys.get("CheckForUpdates");
+        return Boolean.parseBoolean((String) configKeys.get("CheckForUpdates"));
     }
 
     /**
@@ -100,7 +113,7 @@ public class Config {
      * @return the value.
      */
     public boolean getEnableStats() {
-        return (Boolean) configKeys.get("EnableStats");
+        return Boolean.parseBoolean((String) configKeys.get("EnableStats"));
     }
 
     /**
@@ -110,5 +123,39 @@ public class Config {
     public String getDefaultLanguage() {
         return (String) configKeys.get("DefaultLanguage");
     }
+
+    /**
+     * The selected DataStoreType.
+     * @return The value.
+     */
+    public DataStoreTypes getDataStoreType() {
+        return DataStoreTypes.valueOf((String) configKeys.get("DataStore.Type"));
+    }
+
+    /**
+     * Gets the JBDC connection url.
+     * @return the value.
+     */
+    public String getDataStoreJdbcUrl() {
+        return (String) configKeys.get("DataStore.JDBCUrl");
+    }
+
+    /**
+     * Gets the datastore username.
+     * @return the value.
+     */
+    public String getDataStoreUsername() {
+        return (String) configKeys.get("DataStore.UserName");
+    }
+
+    /**
+     * Gets the datastore password.
+     * @return the value.
+     */
+    public String getDataStorePassword() {
+        return (String) configKeys.get("DataStore.Password");
+    }
+
+
 
 }
