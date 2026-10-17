@@ -35,6 +35,9 @@ public class Config {
         configKeys.put("DataStore.JDBCUrl", "");
         configKeys.put("DataStore.UserName", "");
         configKeys.put("DataStore.Password", "");
+        configKeys.put("Gui.Name", "Select Language");
+        configKeys.put("Gui.Size", 54);
+        configKeys.put("Gui.FillerItem", "");
 
         this.comments = defaultComments();
     }
@@ -46,7 +49,7 @@ public class Config {
      * @param debug Debug mode.
      * @param comments The comments.
      */
-    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, DataStoreTypes dataStoreType, String JdbcUrl, String username, String password, HashMap<String, String> comments) {
+    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, DataStoreTypes dataStoreType, String JdbcUrl, String username, String password, String guiTitle, int guiSize, String guiFillerItem, HashMap<String, String> comments) {
         configKeys.put("Prefix", prefix);
         configKeys.put("LangDataStoreMethod", langDataStoreMethod.toString());
         configKeys.put("Debug", String.valueOf(debug));
@@ -57,6 +60,9 @@ public class Config {
         configKeys.put("DataStore.JDBCUrl", JdbcUrl);
         configKeys.put("DataStore.UserName", username);
         configKeys.put("DataStore.Password", password);
+        configKeys.put("Gui.Name", guiTitle);
+        configKeys.put("Gui.Size", guiSize);
+        configKeys.put("Gui.FillerItem", guiFillerItem);
 
         this.comments = defaultComments();
         comments.replaceAll((s, v) -> v);
@@ -74,6 +80,9 @@ public class Config {
         comments.put("DataStore.JDBCUrl", List.of("The JBDC connection string.", "Only needed when DataStore.Type = MySql"));
         comments.put("DataStore.UserName", List.of("The Username to connect with to the database.", "Only needed when DataStore.Type = MySql"));
         comments.put("DataStore.Password", List.of("The Password to connect with to the database.", "Only needed when DataStore.Type = MySql"));
+        comments.put("Gui.Name", List.of("The title of the gui inventory."));
+        comments.put("Gui.Size", List.of("The size of the gui."));
+        comments.put("Gui.FillerItem", List.of("The filler item used.", "When left empty the filling will be skipped."));
 
         return comments;
     }
@@ -156,6 +165,28 @@ public class Config {
         return (String) configKeys.get("DataStore.Password");
     }
 
+    /**
+     * Gets the gui name.
+     * @return the value.
+     */
+    public String getGuiName() {
+        return (String) configKeys.get("Gui.Name");
+    }
 
+    /**
+     * Gets the gui size.
+     * @return the value.
+     */
+    public int getGuiSize() {
+        return (int) configKeys.get("Gui.Size");
+    }
+
+    /**
+     * Gets the gui filler item.
+     * @return the value.
+     */
+    public String getGuiFillerItem() {
+        return (String) configKeys.get("Gui.FillerItem");
+    }
 
 }

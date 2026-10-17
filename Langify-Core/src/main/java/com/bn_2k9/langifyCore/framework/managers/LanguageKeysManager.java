@@ -1,5 +1,6 @@
 package com.bn_2k9.langifyCore.framework.managers;
 
+import com.bn_2k9.langifyApi.interfaces.LanguageKeyApi;
 import com.bn_2k9.langifyCore.LangifyCore;
 import com.bn_2k9.langifyCore.framework.objects.Language;
 import com.bn_2k9.langifyCore.framework.objects.LanguageFile;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class LanguageKeysManager {
+public class LanguageKeysManager implements LanguageKeyApi {
 
     /**
      * A list of available Languages.
@@ -73,7 +74,7 @@ public class LanguageKeysManager {
      * @return the message that is retuned.
      */
     public String getLanguageKey(String lang, String key) {
-        // Check if the full file name is given. If not see if you can find it with .yml extensions.
+        // Check if the full file name is given. If not see is you can find it with .yml extensions.
         if (!lang.contains(".yml")) {
             if (lang.contains(".")) {
                 return "Langify: Invalid file type given.";

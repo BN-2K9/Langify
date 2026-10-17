@@ -14,3 +14,6 @@ dependencies:
     PlaceholderAPI:
       load: BEFORE
       required: false
+    ItemsAdder:
+      load: AFTER
+      required: false

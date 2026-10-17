@@ -29,6 +29,7 @@ You might ask you're self, Why not just use the Minecraft Language system?
 | Plugin                                                       | Description                 | 
 |--------------------------------------------------------------|-----------------------------|
 | [PlaceholderApi](https://modrinth.com/plugin/placeholderapi) | Placeholder parsing support |
+| [ItemsAdder](https://itemsadder.com/)                        | For using custom items.     |
 
 ## Installation
 
@@ -76,13 +77,55 @@ You might ask you're self, Why not just use the Minecraft Language system?
 | [jackson-databind](https://github.com/fasterxml/jackson-databind)  | Used for api communication with Modrinth.       |
 | [PlaceholderApi](https://github.com/PlaceholderAPI/PlaceholderAPI) | Used for placeholder parsing.                   |
 
-### Interacting with the api
+### Interacting with the API
 
 ---
+
+#### Gradle
+
+````
+repositories {
+        maven("https://jitpack.io")
+    }
+    
+    dependencies {
+    compileOnly("com.github.BN_2K9:Langify:{GITHUB-RELEASE}")
+}
+````
+
+#### Maven
+
+````
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.BN_2K9</groupId>
+    <artifactId>Langify</artifactId>
+    <version>{GITHUB-RELEASE}</version>
+</dependency>
+````
+
+#### Examples:
+
+* ###### Get the translated string:
+
+    ``
+String translatedString = LanguageKeyApi.getLanguageKey(UUID player, String key);
+    ``
+
+* ###### Get the selected language: 
+    ``
+    String selectedLanguage = LanguageSelectionApi.getLanguageForPlayer(UUID player);  
+    ``
 
 ## Roadmap
 
 ---
 
-- [ ] Creating the Api.
+- [x] Creating the Api.
 - [ ] Adding Velocity support.

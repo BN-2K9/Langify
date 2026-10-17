@@ -16,18 +16,22 @@ repositories {
 
 dependencies {
     implementation project(":Langify-Core")
+    compileOnly project(":Langify-Api")
 
     // Used for http acces.
     compileOnly("com.fasterxml.jackson.core:jackson-databind:2.22.3")
 
     // Used for BStats.
-    compileOnly("org.bstats:bstats-bukkit:3.2.1")
+    implementation("org.bstats:bstats-bukkit:3.2.1")
 
     // Paperweight
     paperweight.paperDevBundle("26.1.2.build.+")
 
     // PlaceholderApi
     compileOnly 'me.clip:placeholderapi:2.12.3'
+
+    // ItemsAdder
+    compileOnly 'beer.devs:itemsadder-api:4.0.18-beta-10'
 }
 
 java {
@@ -54,6 +58,10 @@ tasks {
     }
 
     shadowJar {
+        configurations = [project.configurations.runtimeClasspath]
+
+        relocate("org.bstats", project.group.toString())
+
         archiveClassifier.set('')
     }
 

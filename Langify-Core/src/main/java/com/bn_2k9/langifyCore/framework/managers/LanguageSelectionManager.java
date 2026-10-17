@@ -1,5 +1,6 @@
 package com.bn_2k9.langifyCore.framework.managers;
 
+import com.bn_2k9.langifyApi.interfaces.LanguageSelectionApi;
 import com.bn_2k9.langifyCore.LangifyCore;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class LanguageSelectionManager {
+public class LanguageSelectionManager implements LanguageSelectionApi {
 
     /**
      * The Language selection cache wil hold the selected languages for the loaded players.
@@ -45,6 +46,11 @@ public class LanguageSelectionManager {
         }
     }
 
+    /**
+     * Gets the selected language for a player.
+     * @param uuid The player to get the selected language from.
+     * @return The selected language filename.
+     */
     public String getLanguageForPlayer(UUID uuid) {
 
         // Check if the selected language is already in the cache.

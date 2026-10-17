@@ -6,10 +6,11 @@ import com.bn_2k9.langifyPaper.framework.ConfigManager;
 import com.bn_2k9.langifyPaper.framework.FileManager;
 import com.bn_2k9.langifyPaper.framework.Logger;
 import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
+import com.bn_2k9.langifyPaper.framework.gui.GuiListener;
+import com.bn_2k9.langifyPaper.framework.integrations.ItemsAdderIntegration;
 import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LangifyPaper extends JavaPlugin {
@@ -57,12 +58,11 @@ public final class LangifyPaper extends JavaPlugin {
             new Metrics(this, 34700);
         }
 
-        // Register the placeholder api expansion.
-        if (!registerPlaceholderApi()) {
-            pluginLogger.logInfo(LogInfoType.ERROR, "Failed to register the PlaceholderApi Expansion. (PlaceholderApi might not be started correctly?)");
-        } else {
-            pluginLogger.logInfo(LogInfoType.INFO, "Registered the PlaceholderApi Expansion successfully");
-        }
+        // Check witch integration is installed and can be activated.
+        checkIntegrations();
+
+        // Register the listeners used by the plugin.
+        registerListeners();
     }
 
     @Override
@@ -71,15 +71,28 @@ public final class LangifyPaper extends JavaPlugin {
     }
 
     /**
-     * Registers the placeholderApi Expansion.
-     * @return true if the Expansion was registered successfully. false if it failed to register.
+     * Check witch integrations is installed and then activate it.
      */
-    private boolean registerPlaceholderApi() {
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderApi")) {
+    private void checkIntegrations() {
+        // Check for the placeholder api.
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderApi")) {
+            // Register the placeholderApi Extension.
             new PlaceholderApiExtension().register();
             placeholderApiEnabled = true;
-            return true;
+            pluginLogger.logInfo(LogInfoType.INFO, "Registered the PlaceholderApi Expansion successfully.");
+        } else {
+            pluginLogger.logInfo(LogInfoType.ERROR, "Failed to register the PlaceholderApi Expansion. (PlaceholderApi might not be started correctly?)");
         }
-        return false;
+
+        if (getServer().getPluginManager().isPluginEnabled("ItemsAdder")) {
+            // Register the events.
+            getServer().getPluginManager().registerEvents(new ItemsAdderIntegration(), this);
+            pluginLogger.logInfo(LogInfoType.INFO, "Registered the ItemsAdder integration successfully.");
+        }
     }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new GuiListener(), this);
+    }
+
 }
