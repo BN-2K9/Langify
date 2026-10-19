@@ -86,9 +86,9 @@ You might ask you're self, Why not just use the Minecraft Language system?
 ````
 repositories {
         maven("https://jitpack.io")
-    }
+}
     
-    dependencies {
+dependencies {
     compileOnly("com.github.BN_2K9:Langify:{GITHUB-RELEASE}")
 }
 ````

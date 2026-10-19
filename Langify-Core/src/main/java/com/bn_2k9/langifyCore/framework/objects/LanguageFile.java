@@ -11,9 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class LanguageFile {
 
@@ -43,7 +41,7 @@ public class LanguageFile {
      * @param key the key to get the string value of.
      * @return The result string.
      */
-    public String get(String key) {
+    public String getString(String key) {
         Object value = data;
 
         for (String part : key.split("\\.")) {
@@ -59,6 +57,85 @@ public class LanguageFile {
             return (String) value;
         }
         return null;
+    }
+
+    /**
+     * Get a int string key value.
+     * @param key the key to get the string value of.
+     * @return The result int.
+     */
+    public int getInt(String key) {
+        Object value = data;
+
+        for (String part : key.split("\\.")) {
+            if (!(value instanceof Map<?, ?> map)) {
+                return -1;
+            }
+
+            value = map.get(part);
+        }
+
+        if (value != null) {
+            assert value instanceof Integer;
+            return (Integer) value;
+        }
+        return -1;
+    }
+
+    /**
+     * Get a single string key value.
+     * @param key the key to get the string value of.
+     * @return The result string.
+     */
+    public boolean getBool(String key) {
+        Object value = data;
+
+        for (String part : key.split("\\.")) {
+            if (!(value instanceof Map<?, ?> map)) {
+                return false;
+            }
+
+            value = map.get(part);
+        }
+
+        if (value != null) {
+            assert value instanceof Boolean;
+            return (Boolean) value;
+        }
+        return false;
+    }
+
+    /**
+     * Get a List<String> key value.
+     * @param key the key to get the string value of.
+     * @return The result List<String>.
+     */
+    public List<String> getStringList(String key) {
+        Object value = data;
+
+        for (String part : key.split("\\.")) {
+            if (!(value instanceof Map<?, ?> map)) {
+                return List.of();
+            }
+
+            value = map.get(part);
+        }
+
+        if (!(value instanceof List<?> list)) {
+            return List.of();
+        }
+
+        List<String> result = new ArrayList<>();
+
+        for (Object element : list) {
+            if (!(element instanceof String string)) {
+                return List.of();
+            }
+
+            result.add(string);
+        }
+
+        return result;
     }
 
     /**
@@ -94,7 +171,7 @@ public class LanguageFile {
 
 
     public Language getLanguage() {
-        return new Language(languageName, new HashMap<>(getSection("keys")));
+        return new Language(languageName, getString("Gui.ItemName"), getString("Gui.Material"), getInt("Gui.InventorySlot"), getStringList("Gui.Lore"), getBool("Gui.ShowInGui"), new HashMap<>(getSection("keys")));
     }
 
 }

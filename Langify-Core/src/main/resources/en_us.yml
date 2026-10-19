@@ -1,2 +1,9 @@
+Gui:
+  InventorySlot: -1
+  Material: "Material:Grass_Block"
+  ItemName: "<green>English"
+  Lore:
+    - "<grey>The beautiful English language."
+  ShowInGui: true
 keys:
   welcome: "welcome!"

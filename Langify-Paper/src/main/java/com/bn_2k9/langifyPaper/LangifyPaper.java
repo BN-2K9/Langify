@@ -5,6 +5,8 @@ import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import com.bn_2k9.langifyPaper.framework.ConfigManager;
 import com.bn_2k9.langifyPaper.framework.FileManager;
 import com.bn_2k9.langifyPaper.framework.Logger;
+import com.bn_2k9.langifyPaper.framework.commands.LangifyCommand;
+import com.bn_2k9.langifyPaper.framework.commands.LanguageCommand;
 import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
 import com.bn_2k9.langifyPaper.framework.gui.GuiListener;
 import com.bn_2k9.langifyPaper.framework.integrations.ItemsAdderIntegration;
@@ -12,6 +14,9 @@ import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.bukkit.BukkitLamp;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 public final class LangifyPaper extends JavaPlugin {
 
@@ -63,6 +68,9 @@ public final class LangifyPaper extends JavaPlugin {
 
         // Register the listeners used by the plugin.
         registerListeners();
+
+        // Register the commands.
+        registerCommands();
     }
 
     @Override
@@ -93,6 +101,16 @@ public final class LangifyPaper extends JavaPlugin {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new GuiListener(), this);
+    }
+
+    private void registerCommands() {
+        Lamp<BukkitCommandActor> lamp = BukkitLamp.builder(this).build();
+        lamp.register(new LanguageCommand());
+        lamp.register(new LangifyCommand());
+    }
+
+    public static void reloadPlugin() {
+        LangifyPaper.getInstance().getLangifyCore().init();
     }
 
 }

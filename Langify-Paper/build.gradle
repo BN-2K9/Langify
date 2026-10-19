@@ -18,6 +18,10 @@ dependencies {
     implementation project(":Langify-Core")
     compileOnly project(":Langify-Api")
 
+    // Lamp used for easy command creation.
+    implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.19'
+    implementation 'io.github.revxrsal:lamp.bukkit:4.0.0-rc.19'
+
     // Used for http acces.
     compileOnly("com.fasterxml.jackson.core:jackson-databind:2.22.3")
 
@@ -43,7 +47,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("26.1.2")
+        minecraftVersion("26.3")
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree=true")
 
         // Download the required plugin.
@@ -53,15 +57,22 @@ tasks {
         }
     }
 
+    compileJava {
+        // Keeping the parameter names in byte code for Lamp.
+        options.compilerArgs += ["-parameters"]
+    }
+
     jar {
+        // Renaming the unshaded jar.
         archiveClassifier.set('unshaded')
     }
 
     shadowJar {
+        // Reconfiguration of the shaded jar for bstats.
         configurations = [project.configurations.runtimeClasspath]
-
         relocate("org.bstats", project.group.toString())
 
+        // Renaming the shaded jar.
         archiveClassifier.set('')
     }
 

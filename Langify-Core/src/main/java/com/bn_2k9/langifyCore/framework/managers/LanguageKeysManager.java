@@ -26,6 +26,7 @@ public class LanguageKeysManager implements LanguageKeyApi {
     /**
      * A has map for all the languageKeys, So: The first string is the Language_Name, The second hashmap is the key, entry.
      */
+    @Getter
     HashMap<String, Language> languageKeys = new HashMap<>();
 
     public void loadLanguageKeys() {
@@ -87,7 +88,7 @@ public class LanguageKeysManager implements LanguageKeyApi {
 
             // Load it every time from the file itself. (Might actually be stupid but alright.)
             LanguageFile languageFile = new LanguageFile(LangifyCore.getInstance().getFileInterface().getLanguageFile(lang));
-            return languageFile.get(key);
+            return languageFile.getString(key);
 
         } else {
             if (languageKeys.containsKey(lang)) {

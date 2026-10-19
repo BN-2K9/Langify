@@ -17,3 +17,8 @@ dependencies:
     ItemsAdder:
       load: AFTER
       required: false
+
+permissions:
+  Langify.Admin:
+    description: "The admin permission used for accessing Langify."
+    default: op

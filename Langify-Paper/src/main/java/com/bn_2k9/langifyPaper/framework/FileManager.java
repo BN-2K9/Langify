@@ -14,12 +14,11 @@ import java.util.List;
 
 public class FileManager implements FileInterface {
 
-    File langFolder = new File(LangifyPaper.getInstance().getDataFolder() + "/languages/");
+     final File langFolder = new File(LangifyPaper.getInstance().getDataFolder() + "/languages/");
 
     @Override
     public List<File> getLanguageFiles() {
-        File folder = langFolder;
-        File[] files = folder.listFiles();
+        File[] files = langFolder.listFiles();
         if (files == null) {
             return null;
         }
