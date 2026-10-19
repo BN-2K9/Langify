@@ -4,7 +4,6 @@ import com.bn_2k9.langifyCore.framework.interfaces.ConfigInterface;
 import com.bn_2k9.langifyCore.framework.objects.Config;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import com.bn_2k9.langifyPaper.LangifyPaper;
-import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,15 +15,10 @@ import java.util.List;
 
 public class ConfigManager implements ConfigInterface {
 
-    @Getter
-    public static Config config;
-
     @Override
     public void safeDefaultConfig() {
-        config = new Config();
-
         if (loadConfig() == null) {
-            saveConfig(config);
+            saveConfig(new Config());
         } else {
             saveConfig(loadConfig());
         }

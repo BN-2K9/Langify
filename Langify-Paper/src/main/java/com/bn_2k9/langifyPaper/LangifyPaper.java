@@ -55,11 +55,11 @@ public final class LangifyPaper extends JavaPlugin {
         // Check for updates.
         UpdateChecker updateChecker = new UpdateChecker();
         // Only check for the newest version if not in debug mode! (To reduce the api requests.)
-        if (!ConfigManager.getConfig().getDebug() && ConfigManager.getConfig().getCheckForUpdates()) {
+        if (!LangifyCore.getInstance().getConfig().getDebug() && LangifyCore.getInstance().getConfig().getCheckForUpdates()) {
             updateChecker.checkForUpdates();
         }
 
-        if (ConfigManager.getConfig().getEnableStats() && !ConfigManager.getConfig().getDebug()) {
+        if (LangifyCore.getInstance().getConfig().getEnableStats() && !LangifyCore.getInstance().getConfig().getDebug()) {
             new Metrics(this, 34700);
         }
 

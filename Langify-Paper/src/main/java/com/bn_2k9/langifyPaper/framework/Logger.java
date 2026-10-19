@@ -1,5 +1,6 @@
 package com.bn_2k9.langifyPaper.framework;
 
+import com.bn_2k9.langifyCore.LangifyCore;
 import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import com.bn_2k9.langifyPaper.LangifyPaper;
@@ -20,7 +21,7 @@ public class Logger implements LoggerInterface {
     public void logInfo(LogInfoType type, String message) {
 
         // Make sure that debug messages are only being sent when enabled.
-        if (type == LogInfoType.DEBUG && !ConfigManager.getConfig().getDebug()) {
+        if (type == LogInfoType.DEBUG && !LangifyCore.getInstance().getConfig().getDebug()) {
             return;
         }
 
@@ -32,10 +33,10 @@ public class Logger implements LoggerInterface {
 
         // Send the message.
         switch (type) {
-            case INFO -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
-            case WARNING -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<gold>WARN <dark_grey>>> <white>" + message)));
-            case ERROR -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<red>ERROR <dark_grey>>> <white>" + message)));
-            case DEBUG -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(ConfigManager.getConfig().getPrefix() + "<yellow>DEBUG <dark_grey>>> <white>" + message)));
+            case INFO -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(LangifyCore.getInstance().getConfig().getPrefix() + "<green>INFO <dark_grey>>> <white>" + message)));
+            case WARNING -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(LangifyCore.getInstance().getConfig().getPrefix() + "<gold>WARN <dark_grey>>> <white>" + message)));
+            case ERROR -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(LangifyCore.getInstance().getConfig().getPrefix() + "<red>ERROR <dark_grey>>> <white>" + message)));
+            case DEBUG -> Bukkit.getServer().getConsoleSender().sendMessage(serializer.serialize(MiniMessage.miniMessage().deserialize(LangifyCore.getInstance().getConfig().getPrefix() + "<yellow>DEBUG <dark_grey>>> <white>" + message)));
         }
 
     }

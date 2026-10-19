@@ -106,7 +106,7 @@ public class Config {
      * @return the value.
      */
     public boolean getDebug() {
-        return Boolean.parseBoolean(((String) configKeys.get("Debug")).toUpperCase());
+        return (Boolean) configKeys.get("Debug");
     }
 
     /**
@@ -114,7 +114,7 @@ public class Config {
      * @return the value.
      */
     public boolean getCheckForUpdates() {
-        return Boolean.parseBoolean((String) configKeys.get("CheckForUpdates"));
+        return (Boolean) configKeys.get("CheckForUpdates");
     }
 
     /**
@@ -122,7 +122,7 @@ public class Config {
      * @return the value.
      */
     public boolean getEnableStats() {
-        return Boolean.parseBoolean(((String) configKeys.get("EnableStats")).toUpperCase());
+        return (Boolean) configKeys.get("EnableStats");
     }
 
     /**

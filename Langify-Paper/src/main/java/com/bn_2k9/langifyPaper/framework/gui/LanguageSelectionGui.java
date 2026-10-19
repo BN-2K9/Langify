@@ -7,7 +7,6 @@ import com.bn_2k9.langifyCore.framework.objects.Language;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import com.bn_2k9.langifyPaper.LangifyPaper;
 import com.bn_2k9.langifyPaper.framework.ComponentParser;
-import com.bn_2k9.langifyPaper.framework.ConfigManager;
 import com.bn_2k9.langifyPaper.framework.gui.utils.GuiMenu;
 import com.bn_2k9.langifyPaper.framework.gui.utils.GuiMenuUtil;
 import com.bn_2k9.langifyPaper.framework.utils.ItemTools;
@@ -85,8 +84,6 @@ public class LanguageSelectionGui extends GuiMenu {
 
             // Set the item in the inventory.
             int requestedSlot = language.getInventorySlot();
-            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.INFO, String.valueOf(requestedSlot));
-            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.INFO, String.valueOf(ConfigManager.getConfig().getDebug()));
             if (requestedSlot < 0) {
                 // it there is no requested slot set it to the first empty.
                 inventory.setItem(inventory.firstEmpty(), itemStack);
