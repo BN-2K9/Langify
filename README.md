@@ -2,9 +2,9 @@
 
 ![bStats Servers](https://img.shields.io/bstats/servers/34700)
 ![bStats Players](https://img.shields.io/bstats/players/34700)
-[![Latest Release](https://img.shields.io/github/v/release/BN_2K9/Langify)](https://github.com/BN_2K9/Langify/releases)
-[![GitHub Issues](https://img.shields.io/github/issues/BN_2K9/Langify)](https://github.com/BN_2K9/Langify/issues)
-[![License](https://img.shields.io/github/license/BN_2K9/Langify)](https://github.com/BN_2K9/Langify)
+[![Latest Release](https://img.shields.io/github/v/release/BN-2K9/Langify)](https://github.com/BN_2K9/Langify/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/BN-2K9/Langify)](https://github.com/BN_2K9/Langify/issues)
+[![License](https://img.shields.io/github/license/BN-2K9/Langify)](https://github.com/BN_2K9/Langify)
 
 ---
 
