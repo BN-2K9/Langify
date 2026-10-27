@@ -1,17 +1,17 @@
-package com.bn_2k9.langifyPaper.framework.features;
+package com.bn_2k9.langifyCore.framework.managers;
 
+import com.bn_2k9.langifyCore.LangifyCore;
+import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
-import com.bn_2k9.langifyPaper.LangifyPaper;
-import com.bn_2k9.langifyPaper.framework.Logger;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class UpdateChecker {
+public class UpdateManager {
 
     private static final String projectSlug = "langify";
     private final HttpClient client = HttpClient.newHttpClient();
@@ -28,10 +28,12 @@ public class UpdateChecker {
                 .GET()
                 .build();
 
+        LoggerInterface loggerInterface = LangifyCore.getInstance().getLogger();
+
         client.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
                 .thenAccept(stringHttpResponse -> {
                     if (stringHttpResponse.statusCode() != 200) {
-                        LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.ERROR, "Failed to check for plugin updates. (" + stringHttpResponse.statusCode() + ")");
+                        loggerInterface.logInfo(LogInfoType.ERROR, "Failed to check for plugin updates. (" + stringHttpResponse.statusCode() + ")");
                         return;
                     }
 
@@ -47,33 +49,34 @@ public class UpdateChecker {
 
                         for (JsonNode version : versions) {
                             if ("release".equals(
-                                    version.path("version_type").asText())) {
+                                    version.path("version_type").asString())) {
                                 latest = version;
                                 break;
                             }
                         }
 
                         if (latest == null) {
-                            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.WARNING, "No published release found on Modrinth.");
+                            loggerInterface.logInfo(LogInfoType.WARNING, "No published release found on Modrinth.");
                             return;
                         }
 
-                        String latestVersion = latest.path("version_number").asText();
+                        String latestVersion = latest.path("version_number").asString();
 
                         if (!currentVersion.equals(latestVersion)) {
-                            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.WARNING, "A newer version may be available! Current: "
+                            loggerInterface.logInfo(LogInfoType.WARNING, "A newer version may be available! Current: "
                                     + currentVersion + ", latest: " + latestVersion + " Get it at: https://modrinth.com/plugin/langify");
                         } else {
-                            LangifyPaper.getInstance().getPluginLogger().logInfo(LogInfoType.INFO, "You are running the latest version.");
+                            loggerInterface.logInfo(LogInfoType.INFO, "You are running the latest version.");
                         }
 
                     } catch (Exception e) {
-                        Logger.getInstance().logInfo(LogInfoType.ERROR, "Could not parse Modrinth response: " + e.getMessage());
+                        loggerInterface.logInfo(LogInfoType.ERROR, "Could not parse Modrinth response: " + e.getMessage());
                     }
                 }).exceptionally(error -> {
-                    Logger.getInstance().logInfo(LogInfoType.WARNING, "Could not check Modrinth for updates: " + error.getMessage());
+                    loggerInterface.logInfo(LogInfoType.WARNING, "Could not check Modrinth for updates: " + error.getMessage());
 
                     return null;
                 });
     }
+
 }

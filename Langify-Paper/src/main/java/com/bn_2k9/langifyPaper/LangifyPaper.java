@@ -7,7 +7,6 @@ import com.bn_2k9.langifyPaper.framework.FileManager;
 import com.bn_2k9.langifyPaper.framework.Logger;
 import com.bn_2k9.langifyPaper.framework.commands.LangifyCommand;
 import com.bn_2k9.langifyPaper.framework.commands.LanguageCommand;
-import com.bn_2k9.langifyPaper.framework.features.UpdateChecker;
 import com.bn_2k9.langifyPaper.framework.gui.GuiListener;
 import com.bn_2k9.langifyPaper.framework.integrations.ItemsAdderIntegration;
 import com.bn_2k9.langifyPaper.framework.integrations.PlaceholderApiExtension;
@@ -51,13 +50,6 @@ public final class LangifyPaper extends JavaPlugin {
         // Create and initialize the langifyCore.
         langifyCore = new LangifyCore(pluginLogger, fileManager, configManager);
         langifyCore.init();
-
-        // Check for updates.
-        UpdateChecker updateChecker = new UpdateChecker();
-        // Only check for the newest version if not in debug mode! (To reduce the api requests.)
-        if (!LangifyCore.getInstance().getConfig().getDebug() && LangifyCore.getInstance().getConfig().getCheckForUpdates()) {
-            updateChecker.checkForUpdates();
-        }
 
         if (LangifyCore.getInstance().getConfig().getEnableStats() && !LangifyCore.getInstance().getConfig().getDebug()) {
             new Metrics(this, 34700);

@@ -6,6 +6,7 @@ import com.bn_2k9.langifyCore.framework.interfaces.LoggerInterface;
 import com.bn_2k9.langifyCore.framework.managers.DataStoreManager;
 import com.bn_2k9.langifyCore.framework.managers.LanguageKeysManager;
 import com.bn_2k9.langifyCore.framework.managers.LanguageSelectionManager;
+import com.bn_2k9.langifyCore.framework.managers.UpdateManager;
 import com.bn_2k9.langifyCore.framework.objects.Config;
 import com.bn_2k9.langifyCore.framework.utils.LogInfoType;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class LangifyCore {
     @Getter
     public Config config;
 
-    public LangifyCore(LoggerInterface loggerInterface, FileInterface fileInterface, ConfigInterface configInterface) {
+    public LangifyCore(LoggerInterface loggerInterface, FileInterface fileInterface, ConfigInterface configInterface, PluginData pluginData) {
         // Save the current instance.
         instance = this;
 
@@ -74,6 +75,13 @@ public class LangifyCore {
         //TODO add a message whenever a language does not have a key the default language does have.
 
         logger.logInfo(LogInfoType.INFO, "Langify core has started.");
+
+        // Check for updates.
+        UpdateManager updateChecker = new UpdateManager();
+        // Only check for the newest version if not in debug mode! (To reduce the api requests.)
+        if (!LangifyCore.getInstance().getConfig().getDebug() && LangifyCore.getInstance().getConfig().getCheckForUpdates()) {
+            updateChecker.checkForUpdates();
+        }
     }
 
 }

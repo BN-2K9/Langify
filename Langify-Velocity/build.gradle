@@ -1,18 +1,36 @@
 plugins {
     id("java-library")
     id("xyz.jpenilla.run-velocity") version "3.1.0"
+    id("com.gradleup.shadow") version "9.1.0"
 }
 
 repositories {
+    // Paper MC Repo
     maven {
         name = 'papermc'
         url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+
+    // PlaceholderApi
+    maven {
+        url = 'https://repo.extendedclip.com/releases/'
     }
 }
 
 dependencies {
     implementation(project(":Langify-Core"))
+
     compileOnly("com.velocitypowered:velocity-api:4.2.1-SNAPSHOT")
+
+    // BStats
+    implementation("org.bstats:bstats-velocity:3.2.1")
+
+    // PlaceholderApi
+    compileOnly 'me.clip:placeholderapi:2.12.3'
+
+    // Lamp
+    implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.19'
+    implementation 'io.github.revxrsal:lamp.velocity:4.0.0-rc.19'
 }
 
 java {
@@ -25,7 +43,30 @@ tasks {
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
     velocityVersion("4.2.1-SNAPSHOT")
+
+      downloadPlugins {
+          // PlaceholderApi Plugin
+          modrinth("placeholderapi", "2.12.3")
+      }
   }
+
+    compileJava {
+        // Keeping the parameter names in byte code for Lamp.
+        options.compilerArgs += ["-parameters"]
+    }
+
+    build {
+        dependsOn tasks.shadowJar
+    }
+
+    shadowJar {
+        // Reconfiguration of the shaded jar for bstats.
+        configurations = [project.configurations.runtimeClasspath]
+        relocate("org.bstats", project.group.toString())
+
+        // Renaming the shaded jar.
+        archiveClassifier.set('')
+    }
 
     def pluginVersion = version.toString()
     def pluginDescription = description?.toString() ?: ""

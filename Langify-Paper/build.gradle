@@ -22,9 +22,6 @@ dependencies {
     implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.19'
     implementation 'io.github.revxrsal:lamp.bukkit:4.0.0-rc.19'
 
-    // Used for http acces.
-    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.22.3")
-
     // Used for BStats.
     implementation("org.bstats:bstats-bukkit:3.2.1")
 
