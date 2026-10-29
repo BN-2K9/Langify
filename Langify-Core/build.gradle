@@ -34,4 +34,21 @@ tasks {
     build {
         dependsOn tasks.shadowJar
     }
+
+    version = findProperty('version') ?: '1.0.0'
+    description = findProperty('description') ?: ''
+
+    def pluginVersion = rootProject.version.toString()
+    def pluginDescription = rootProject.description?.toString() ?: ''
+
+    processResources {
+        filteringCharset = 'UTF-8'
+
+        filesMatching('UpdateManager.java') {
+            expand(
+                    version: pluginVersion,
+                    description: pluginDescription
+            )
+        }
+    }
 }

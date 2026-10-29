@@ -33,7 +33,7 @@ public class LangifyCore {
     @Getter
     public Config config;
 
-    public LangifyCore(LoggerInterface loggerInterface, FileInterface fileInterface, ConfigInterface configInterface, PluginData pluginData) {
+    public LangifyCore(LoggerInterface loggerInterface, FileInterface fileInterface, ConfigInterface configInterface) {
         // Save the current instance.
         instance = this;
 

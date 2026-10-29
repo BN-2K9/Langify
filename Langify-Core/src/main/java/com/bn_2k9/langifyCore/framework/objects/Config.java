@@ -27,9 +27,9 @@ public class Config {
     public Config() {
         configKeys.put("Prefix", "Langify // ");
         configKeys.put("LangDataStoreMethod", LangDataStoreMethod.Dynamic_Load.toString());
-        configKeys.put("Debug", String.valueOf(false));
-        configKeys.put("CheckForUpdates", String.valueOf(true));
-        configKeys.put("EnableStats", String.valueOf(true));
+        configKeys.put("Debug", false);
+        configKeys.put("CheckForUpdates", true);
+        configKeys.put("EnableStats", true);
         configKeys.put("DefaultLanguage", "en_us.yml");
         configKeys.put("DataStore.Type", "SqlLite");
         configKeys.put("DataStore.JDBCUrl", "");

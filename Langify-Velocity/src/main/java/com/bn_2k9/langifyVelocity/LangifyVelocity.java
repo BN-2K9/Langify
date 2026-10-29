@@ -3,7 +3,6 @@ package com.bn_2k9.langifyVelocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
-import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
 public class LangifyVelocity {
@@ -13,6 +12,6 @@ public class LangifyVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
 
-        Metrics metrics = new Metrics(this, )
+        // Metrics metrics = new Metrics(this, )
     }
 }

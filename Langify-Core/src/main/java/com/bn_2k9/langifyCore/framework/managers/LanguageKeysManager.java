@@ -29,6 +29,7 @@ public class LanguageKeysManager implements LanguageKeyApi {
     @Getter
     HashMap<String, Language> languageKeys = new HashMap<>();
 
+    // TODO add a empty language for dynamic/no cache mode.
     public void loadLanguageKeys() {
 
         // Remove the old languages. (for reloading)

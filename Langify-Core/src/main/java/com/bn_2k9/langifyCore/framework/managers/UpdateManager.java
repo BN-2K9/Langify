@@ -18,7 +18,7 @@ public class UpdateManager {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public void checkForUpdates() {
-        final String currentVersion = LangifyPaper.getInstance().getPluginMeta().getVersion();
+        final String currentVersion = "${version}";
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(
