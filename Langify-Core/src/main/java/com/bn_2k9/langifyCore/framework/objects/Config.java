@@ -38,6 +38,7 @@ public class Config {
         configKeys.put("Gui.Name", "Select Language");
         configKeys.put("Gui.Size", 54);
         configKeys.put("Gui.FillerItem", "");
+        configKeys.put("AnnounceMissingKeys", true);
 
         this.comments = defaultComments();
     }
@@ -49,7 +50,7 @@ public class Config {
      * @param debug Debug mode.
      * @param comments The comments.
      */
-    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, DataStoreTypes dataStoreType, String JdbcUrl, String username, String password, String guiTitle, int guiSize, String guiFillerItem, HashMap<String, String> comments) {
+    public Config(String prefix, LangDataStoreMethod langDataStoreMethod, Boolean debug, Boolean checkForUpdates, Boolean enableStats, DataStoreTypes dataStoreType, String JdbcUrl, String username, String password, String guiTitle, int guiSize, String guiFillerItem, boolean announceMissingParts, HashMap<String, String> comments) {
         configKeys.put("Prefix", prefix);
         configKeys.put("LangDataStoreMethod", langDataStoreMethod.toString());
         configKeys.put("Debug", String.valueOf(debug));
@@ -63,6 +64,7 @@ public class Config {
         configKeys.put("Gui.Name", guiTitle);
         configKeys.put("Gui.Size", guiSize);
         configKeys.put("Gui.FillerItem", guiFillerItem);
+        configKeys.put("AnnounceMissingKeys", announceMissingParts);
 
         this.comments = defaultComments();
         comments.replaceAll((s, v) -> v);
@@ -83,6 +85,7 @@ public class Config {
         comments.put("Gui.Name", List.of("The title of the gui inventory."));
         comments.put("Gui.Size", List.of("The size of the gui."));
         comments.put("Gui.FillerItem", List.of("The filler item used.", "When left empty the filling will be skipped."));
+        comments.put("AnnounceMissingKeys", List.of("Whether to announce missing language keys that deviate from the default language."));
 
         return comments;
     }
@@ -187,6 +190,14 @@ public class Config {
      */
     public String getGuiFillerItem() {
         return (String) configKeys.get("Gui.FillerItem");
+    }
+
+    /**
+     * Get the announcement missing parts boolean.
+     * @return the value.
+     */
+    public boolean getAnnounceMissingParts() {
+        return (Boolean) configKeys.get("AnnounceMissingKeys");
     }
 
 }

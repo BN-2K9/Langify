@@ -31,7 +31,7 @@ public class LangifyCore {
     private final ConfigInterface configInterface;
 
     @Getter
-    public Config config;
+    private Config config;
 
     public LangifyCore(LoggerInterface loggerInterface, FileInterface fileInterface, ConfigInterface configInterface) {
         // Save the current instance.

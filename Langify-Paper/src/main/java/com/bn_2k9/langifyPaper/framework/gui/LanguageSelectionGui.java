@@ -55,10 +55,10 @@ public class LanguageSelectionGui extends GuiMenu {
                 itemMeta.setHideTooltip(true);
                 itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             });
-            FILLER.setData(DataComponentTypes.CUSTOM_NAME, ComponentParser.parse(" "));
+            FILLER.setData(DataComponentTypes.ITEM_NAME, ComponentParser.parse(" "));
         }
 
-        for (String key : LanguageKeysManager.getInstance().getLanguageKeys().keySet()) {
+        for (String key : LanguageKeysManager.getInstance().getLanguages().keySet()) {
             Language language = LanguageKeysManager.getInstance().getLanguageKeys().get(key);
             if (!language.isShowInGui()) {
                 continue;

@@ -24,39 +24,73 @@ public class LanguageKeysManager implements LanguageKeyApi {
     List<String> availableLanguages = new ArrayList<>();
 
     /**
-     * A has map for all the languageKeys, So: The first string is the Language_Name, The second hashmap is the key, entry.
+     * A hashmap for all the languageKeys, So: The first string is the Language_Name, The second hashmap is the key, entry.
      */
     @Getter
     HashMap<String, Language> languageKeys = new HashMap<>();
 
-    // TODO add a empty language for dynamic/no cache mode.
+    /**
+     * A hashmap of the percent that is translated for a language in view of the default language.
+     */
+    @Getter
+    HashMap<String, Integer> percentageTranslated = new HashMap<>();
+
     public void loadLanguageKeys() {
 
         // Remove the old languages. (for reloading)
         availableLanguages = new ArrayList<>();
-        // Put all the new languages in.
-        int countOfLanguages = 0;
-        for (File file : LangifyCore.getInstance().getFileInterface().getLanguageFiles()) {
-            availableLanguages.add(file.getName());
-            countOfLanguages++;
+        List<File> files = LangifyCore.getInstance().getFileInterface().getLanguageFiles();
+
+        // Get the default language keys.
+        HashMap<String, String> defaultLanguageKeys = new HashMap<>();
+        for (File file : files) {
+            if (file.getName().equals(LangifyCore.getInstance().getConfig().getDefaultLanguage())) {
+                defaultLanguageKeys = new LanguageFile(file).getLanguage().getKeys();
+            }
         }
 
-        LangifyCore.getInstance().getLogger().logInfo(LogInfoType.DEBUG, "Loaded (" + countOfLanguages + ") languages.");
+        // Put all the new languages in.
+        int countOfLanguages = 0;
+        for (File file : files) {
+            availableLanguages.add(file.getName());
+            countOfLanguages++;
 
-        if (LangifyCore.getInstance().config.getLangDataStoreMethod() == LangDataStoreMethod.Load_All) {
-            for (File file : LangifyCore.getInstance().getFileInterface().getLanguageFiles()) {
-                LanguageFile languageFile = new LanguageFile(file);
-                Language language = languageFile.getLanguage();
+            LanguageFile languageFile = new LanguageFile(file);
+            Language language = languageFile.getLanguage();
 
-                if (language == null) {
-                    LangifyCore.getInstance().getLogger().logInfo(LogInfoType.ERROR, "Language did not load from file. Ignoring language.");
-                    availableLanguages.remove(file.getName());
-                    return;
+            // Check if the language did serialize.
+            if (language == null) {
+                LangifyCore.getInstance().getLogger().logInfo(LogInfoType.ERROR, "Language did not load from file. Ignoring language.");
+                availableLanguages.remove(file.getName());
+                return;
+            }
+
+            // Calculate the percentage per language.
+            int defaultKeyCount = defaultLanguageKeys.size();
+            int languageKeyCount = language.getKeys().size();
+            percentageTranslated.put(language.getName(), (languageKeyCount/defaultKeyCount) * 100);
+
+            // If AnnounceMissingParts is enabled print it to the console.
+            if (LangifyCore.getInstance().getConfig().getAnnounceMissingParts()) {
+                for (String defaultKey : defaultLanguageKeys.keySet()) {
+                    if (!language.getKeys().containsKey(defaultKey)) {
+                        LangifyCore.getInstance().getLogger().logInfo(LogInfoType.WARNING, "The key: " + defaultKey + " is missing in language: " + language.getName());
+                    }
                 }
+            }
 
+            // Load the keys in to the variable for the selected type.
+            if (LangifyCore.getInstance().getConfig().getLangDataStoreMethod() == LangDataStoreMethod.Load_All) {
+                languageKeys.put(file.getName(), languageFile.getLanguage());
+            } else if (LangifyCore.getInstance().getConfig().getLangDataStoreMethod() == LangDataStoreMethod.Dynamic_Load) {
+                // Clear the language keys to load dynamically.
+                language.setKeys(new HashMap<>());
                 languageKeys.put(file.getName(), languageFile.getLanguage());
             }
         }
+
+        // Print the loaded languages to the console.
+        LangifyCore.getInstance().getLogger().logInfo(LogInfoType.DEBUG, "Loaded (" + countOfLanguages + ") languages.");
     }
 
     /**
@@ -106,9 +140,16 @@ public class LanguageKeysManager implements LanguageKeyApi {
 
                 // Dynamically load the language.
                 LanguageFile languageFile = new LanguageFile(LangifyCore.getInstance().getFileInterface().getLanguageFile(lang));
+                String message = languageFile.getLanguage().getKeys().get(key);
+
+                // Add the language key to the cached language.
+                Language language = languageFile.getLanguage();
+                HashMap<String, String> keys = language.getKeys();
+                keys.put(key, message);
+                language.setKeys(keys);
+
                 languageKeys.put(lang, languageFile.getLanguage());
 
-                String message = languageKeys.get(lang).getKeys().get(key);
                 if (message == null) {
                     return "Langify: the requested key: " + key + " was not found in language: " + lang;
                 } else {
@@ -123,6 +164,22 @@ public class LanguageKeysManager implements LanguageKeyApi {
 
     public InputStream getDefaultLanguage() {
         return LangifyCore.class.getResourceAsStream("/en_us.yml");
+    }
+
+    public HashMap<String, Language> getLanguages() {
+        switch (LangifyCore.getInstance().getConfig().getLangDataStoreMethod()) {
+            case Load_All, Dynamic_Load -> {return getLanguageKeys();}
+            case Disable_Cache -> {
+                HashMap<String, Language> hashMap = new HashMap<>();
+                for (File file : LangifyCore.getInstance().getFileInterface().getLanguageFiles()) {
+                    LanguageFile languageFile = new LanguageFile(file);
+                    Language language = languageFile.getLanguage();
+                    hashMap.put(file.getName(), language);
+                }
+                return hashMap;
+            }
+        }
+        return null;
     }
 
     /**

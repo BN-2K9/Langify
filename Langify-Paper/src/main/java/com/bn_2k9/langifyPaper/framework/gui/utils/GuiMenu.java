@@ -16,7 +16,7 @@ public abstract class GuiMenu implements InventoryHolder {
 
     protected final GuiMenuUtil guiMenuUtil;
     protected Inventory inventory;
-    public ItemStack FILLER = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    public ItemStack FILLER = new ItemStack(Material.AIR);
 
     public GuiMenu(GuiMenuUtil guiMenuUtil) {
         this.guiMenuUtil = guiMenuUtil;

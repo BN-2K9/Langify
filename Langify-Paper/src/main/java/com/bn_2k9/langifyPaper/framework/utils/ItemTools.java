@@ -133,7 +133,7 @@ public class ItemTools {
                 }
             }
             case "Skull" -> {
-                return getSkull(args[1]);
+                return getSkull(args[1] + ":" + args[2]);
             }
             case "Material" -> {
                 return new ItemStack(Material.valueOf(args[1].toUpperCase()));

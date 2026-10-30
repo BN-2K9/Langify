@@ -47,11 +47,12 @@ You might ask you're self, Why not just use the Minecraft Language system?
 ## [PlaceholderApi](https://modrinth.com/plugin/placeholderapi) Placeholders
 
 ---
-| Placeholder                           | Description                                                                                            |
-|---------------------------------------|--------------------------------------------------------------------------------------------------------|
-| `%langify_key:(Key path)%`            | Returns a string of the language key. (A player is required to get the key from the correct langauge.) |
-| `%langify_key:(Key path):(language)%` | Returns a string of the language key.                                                                  |
-| `%langify_selectedLang%`              | Returns the selected language of the player.                                                           |
+| Placeholder                                 | Description                                                                                            |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `%langify_key:(Key path)%`                  | Returns a string of the language key. (A player is required to get the key from the correct langauge.) |
+| `%langify_key:(Key path):(language)%`       | Returns a string of the language key.                                                                  |
+| `%langify_selectedLang%`                    | Returns the selected language of the player.                                                           |
+| `%langify_percentageTranslated:(language)%` | Returns the precentage of the language that is translated.                                             | 
 
 ## Developer Information
 

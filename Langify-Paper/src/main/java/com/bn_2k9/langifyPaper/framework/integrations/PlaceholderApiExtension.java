@@ -49,6 +49,12 @@ public class PlaceholderApiExtension extends PlaceholderExpansion {
                         return "Langify: No player supplied. Please supply a player.";
                     }
                 }
+                case "percentageTranslated" -> {
+                    if (args.length < 3) {
+                        return "Langify: No language specified.";
+                    }
+                    return String.valueOf(LanguageKeysManager.getInstance().getPercentageTranslated().get(args[2]));
+                }
                 case null, default -> {
                     return "Langify: Not a valid argument.";
                 }
