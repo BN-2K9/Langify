@@ -29,7 +29,7 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.12.3'
 
     // Lamp
-    implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.19'
+    implementation 'io.github.revxrsal:lamp.common:4.0.1'
     implementation 'io.github.revxrsal:lamp.velocity:4.0.0-rc.19'
 }
 
