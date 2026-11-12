@@ -10,7 +10,7 @@ dependencies {
     implementation project(":Langify-Api")
 
     // For parsing the language files.
-    compileOnly 'org.yaml:snakeyaml:2.4'
+    compileOnly 'org.yaml:snakeyaml:2.7'
 
     // For MysSql Usage.
     compileOnly 'com.zaxxer:HikariCP:7.1.0'
