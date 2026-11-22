@@ -20,7 +20,7 @@ dependencies {
 
     // Lamp used for easy command creation.
     implementation 'io.github.revxrsal:lamp.common:4.0.1'
-    implementation 'io.github.revxrsal:lamp.bukkit:4.0.0-rc.19'
+    implementation 'io.github.revxrsal:lamp.bukkit:4.0.1'
 
     // Used for BStats.
     implementation("org.bstats:bstats-bukkit:3.2.1")
