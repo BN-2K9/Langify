@@ -158,15 +158,32 @@ public class LanguageFile {
             return Map.of();
         }
 
-        Map<String, String> result = new HashMap<>();
-
-        for (Map.Entry<?, ?> entry : map.entrySet()) {
-            if (entry.getKey() instanceof String name) {
-                result.put(name, (String) entry.getValue());
-            }
-        }
+        Map<String, String> result = new LinkedHashMap<>();
+        flattenSection(map, "", result);
 
         return result;
+    }
+
+    private void flattenSection(Map<?, ?> map, String prefix, Map<String, String> result) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            if (entry.getKey() == null) {
+                continue;
+            }
+
+            String name = String.valueOf(entry.getKey());
+            String fullKey = prefix.isEmpty() ? name : prefix + "." + name;
+            Object value = entry.getValue();
+
+            if (value instanceof Map<?, ?> nestedMap) {
+
+                flattenSection(nestedMap, fullKey, result);
+
+            } else if (value instanceof String string) {
+
+                result.put(fullKey, string);
+
+            }
+        }
     }
 
 
