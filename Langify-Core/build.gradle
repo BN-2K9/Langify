@@ -19,7 +19,7 @@ dependencies {
     compileOnly 'org.xerial:sqlite-jdbc:3.54.1.0'
 
     // For Https usage.
-    compileOnly("tools.jackson.core:jackson-databind:3.2.4")
+    compileOnly("tools.jackson.core:jackson-databind:3.3.0")
 }
 
 tasks {
